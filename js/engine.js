@@ -1,0 +1,151 @@
+/**
+ * Severify Scoring Engine
+ * Pure logic — no DOM manipulation.
+ */
+
+const SeverifyEngine = {
+  /**
+   * Get impact score from category and detail selection.
+   * @param {string} categoryId - Selected category ID
+   * @param {number} detailIndex - Selected detail option index
+   * @returns {{ score: number, level: object, category: object, detail: object }}
+   */
+  calculateImpact(categoryId, detailIndex) {
+    const category = IMPACT_CATEGORIES.find(c => c.id === categoryId);
+    const detail = IMPACT_DETAILS[categoryId].options[detailIndex];
+    return {
+      score: detail.impact.value,
+      level: detail.impact,
+      category,
+      detail,
+    };
+  },
+
+  /**
+   * Calculate likelihood from three question scores.
+   * @param {number[]} scores - Array of 3 scores (each 1–4)
+   * @returns {{ score: number, rawAverage: number, level: object, scores: number[] }}
+   */
+  calculateLikelihood(scores) {
+    const rawAverage = scores.reduce((a, b) => a + b, 0) / scores.length;
+    const rounded = Math.round(rawAverage);
+    const level = this.scoreToLevel(rounded);
+    return {
+      score: rounded,
+      rawAverage: Math.round(rawAverage * 100) / 100,
+      level,
+      scores,
+    };
+  },
+
+  /**
+   * Calculate final severity from impact and likelihood scores.
+   * @param {number} impactScore - 1–4
+   * @param {number} likelihoodScore - 1–4
+   * @returns {{ score: number, level: object }}
+   */
+  calculateSeverity(impactScore, likelihoodScore) {
+    const score = (IMPACT_WEIGHT * impactScore) + (LIKELIHOOD_WEIGHT * likelihoodScore);
+    const rounded = Math.round(score * 100) / 100;
+    const level = SEVERITY_RANGES.find(r => rounded >= r.min && rounded <= r.max)?.level || SEVERITY_LEVELS.LOW;
+    return { score: rounded, level };
+  },
+
+  /**
+   * Map integer score (1–4) to severity level.
+   */
+  scoreToLevel(score) {
+    switch (score) {
+      case 4: return SEVERITY_LEVELS.CRITICAL;
+      case 3: return SEVERITY_LEVELS.HIGH;
+      case 2: return SEVERITY_LEVELS.MEDIUM;
+      default: return SEVERITY_LEVELS.LOW;
+    }
+  },
+
+  /**
+   * Generate export data object.
+   */
+  generateExport(state) {
+    const data = {
+      timestamp: new Date().toISOString(),
+      frameworkVersion: 'v2',
+      impact: {
+        category: state.impactCategory,
+        detail: state.impactDetail,
+        score: state.impactResult.score,
+        level: state.impactResult.level.label,
+      },
+      likelihood: {
+        scores: state.likelihoodScores,
+        rawAverage: state.likelihoodResult.rawAverage,
+        calculatedScore: state.likelihoodResult.score,
+        calculatedLevel: state.likelihoodResult.level.label,
+      },
+      severity: {
+        score: state.severityResult.score,
+        level: state.severityResult.level.label,
+      },
+    };
+
+    if (state.likelihoodOverride) {
+      data.likelihood.override = {
+        score: state.likelihoodOverride.score,
+        level: state.likelihoodOverride.level.label,
+        justification: state.likelihoodOverride.justification,
+      };
+    }
+
+    if (state.severityOverride) {
+      data.severity.override = {
+        level: state.severityOverride.level.label,
+        justification: state.severityOverride.justification,
+      };
+    }
+
+    return data;
+  },
+
+  /**
+   * Export as markdown string.
+   */
+  toMarkdown(exportData) {
+    const lines = [
+      '# Vulnerability Severity Assessment',
+      '',
+      `**Date**: ${exportData.timestamp}`,
+      `**Framework**: ${exportData.frameworkVersion}`,
+      '',
+      '## Impact',
+      '',
+      `- **Category**: ${exportData.impact.category}`,
+      `- **Detail**: ${exportData.impact.detail}`,
+      `- **Score**: ${exportData.impact.score} (${exportData.impact.level})`,
+      '',
+      '## Likelihood',
+      '',
+      `- **Attacker Profile**: ${exportData.likelihood.scores[0]}/4`,
+      `- **Exploit Feasibility**: ${exportData.likelihood.scores[1]}/4`,
+      `- **Blast Radius**: ${exportData.likelihood.scores[2]}/4`,
+      `- **Average**: ${exportData.likelihood.rawAverage}`,
+      `- **Score**: ${exportData.likelihood.calculatedScore} (${exportData.likelihood.calculatedLevel})`,
+    ];
+
+    if (exportData.likelihood.override) {
+      lines.push(`- **Override**: ${exportData.likelihood.override.score} (${exportData.likelihood.override.level})`);
+      lines.push(`- **Override Justification**: ${exportData.likelihood.override.justification}`);
+    }
+
+    lines.push('', '## Final Severity', '');
+    lines.push(`- **Score**: ${exportData.severity.score}`);
+    lines.push(`- **Level**: ${exportData.severity.level}`);
+
+    if (exportData.severity.override) {
+      lines.push(`- **Override**: ${exportData.severity.override.level}`);
+      lines.push(`- **Override Justification**: ${exportData.severity.override.justification}`);
+    }
+
+    lines.push('', '---', '', '*Generated by Severify*');
+    return lines.join('\n');
+  },
+};
