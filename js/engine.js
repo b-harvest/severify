@@ -138,7 +138,7 @@ const SeverifyEngine = {
       `- **Blast Radius**: ${exportData.likelihood.scores[2]}/4`,
       `- **Average**: ${exportData.likelihood.rawAverage}`,
       `- **Score**: ${exportData.likelihood.calculatedScore} (${exportData.likelihood.calculatedLevel})`,
-    ];
+    );
 
     if (exportData.likelihood.override) {
       lines.push(`- **Override**: ${exportData.likelihood.override.score} (${exportData.likelihood.override.level})`);
