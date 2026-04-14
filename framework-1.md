@@ -245,11 +245,11 @@ Examples:
 
 Severity is derived from both **Impact** and **Likelihood**.
 
-Impact is weighted more heavily because the **result of exploitation is the primary risk factor**.
+Likelihood is weighted more heavily because the **probability of exploitation is the primary risk factor**.
 
 ## Severity Score Formula
 
-SeverityScore = (0.6 × Impact) + (0.4 × Likelihood)
+SeverityScore = (0.4 × Impact) + (0.6 × Likelihood)
 
 Where:
 

@@ -5,8 +5,8 @@ It resolves ambiguities identified in v1 and introduces a structured scoring sys
 
 Severity is determined using two primary factors:
 
-- **Impact** (weight: 0.6) — consequence of a successful exploit
-- **Likelihood** (weight: 0.4) — probability and difficulty of exploitation
+- **Impact** (weight: 0.4) — consequence of a successful exploit
+- **Likelihood** (weight: 0.6) — probability and difficulty of exploitation
 
 The final **Severity Score** is calculated from both factors.
 
@@ -185,7 +185,7 @@ Mapping:
 ## Severity Score Formula
 
 ```
-SeverityScore = (0.6 × Impact) + (0.4 × Likelihood)
+SeverityScore = (0.4 × Impact) + (0.6 × Likelihood)
 ```
 
 Where Impact ∈ {1, 2, 3, 4} and Likelihood ∈ {1, 2, 3, 4}
@@ -203,17 +203,18 @@ Where Impact ∈ {1, 2, 3, 4} and Likelihood ∈ {1, 2, 3, 4}
 
 | Impact \ Likelihood | Low (1) | Medium (2) | High (3) | Critical (4) |
 |---------------------|---------|------------|----------|---------------|
-| **Critical (4)** | 2.8 High | 3.2 High | 3.6 Critical | 4.0 Critical |
-| **High (3)** | 2.2 Medium | 2.6 High | 3.0 High | 3.4 High |
-| **Medium (2)** | 1.6 Medium | 2.0 Medium | 2.4 Medium | 2.8 High |
-| **Low (1)** | 1.0 Low | 1.4 Low | 1.8 Medium | 2.2 Medium |
+| **Critical (4)** | 2.2 Medium | 2.8 High | 3.4 High | 4.0 Critical |
+| **High (3)** | 1.8 Medium | 2.4 Medium | 3.0 High | 3.6 Critical |
+| **Medium (2)** | 1.4 Low | 2.0 Medium | 2.6 High | 3.2 High |
+| **Low (1)** | 1.0 Low | 1.6 Medium | 2.2 Medium | 2.8 High |
 
 ---
 
 # Override Mechanism
 
-Both Likelihood and final Severity can be manually overridden with a required justification.
-When overridden, both the calculated value and the override value (with justification) are recorded.
+Both Impact and Likelihood can be manually overridden with an optional justification.
+When overridden, the final Severity is recalculated from the effective (overridden) Impact and Likelihood values.
+Both the calculated value and the override value (with justification, if provided) are recorded.
 
 ---
 

@@ -17,8 +17,8 @@ const SEVERITY_RANGES = [
   { min: 1.00, max: 1.49, level: SEVERITY_LEVELS.LOW },
 ];
 
-const IMPACT_WEIGHT = 0.6;
-const LIKELIHOOD_WEIGHT = 0.4;
+const IMPACT_WEIGHT = 0.4;
+const LIKELIHOOD_WEIGHT = 0.6;
 
 // Impact Step 1: Category selection
 const IMPACT_CATEGORIES = [
@@ -133,8 +133,8 @@ const LIKELIHOOD_QUESTIONS = [
 const SEVERITY_MATRIX = [
   // Impact Low(1), Medium(2), High(3), Critical(4) — rows
   // Likelihood Low(1), Medium(2), High(3), Critical(4) — columns
-  [1.0, 1.4, 1.8, 2.2],  // Impact Low
-  [1.6, 2.0, 2.4, 2.8],  // Impact Medium
-  [2.2, 2.6, 3.0, 3.4],  // Impact High
-  [2.8, 3.2, 3.6, 4.0],  // Impact Critical
+  [1.0, 1.6, 2.2, 2.8],  // Impact Low
+  [1.4, 2.0, 2.6, 3.2],  // Impact Medium
+  [1.8, 2.4, 3.0, 3.6],  // Impact High
+  [2.2, 2.8, 3.4, 4.0],  // Impact Critical
 ];
