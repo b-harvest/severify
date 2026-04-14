@@ -144,15 +144,15 @@
               <span class="detail-label">Average:</span>
               <span class="detail-value" id="resultLAvg"></span>
             </div>
+            <div class="override-info hidden" id="impactOverrideInfo">
+              <div class="override-info-header">Impact Override Applied</div>
+              <div class="override-info-value" id="impactOverrideInfoValue"></div>
+              <div class="override-info-justification" id="impactOverrideInfoJustification"></div>
+            </div>
             <div class="override-info hidden" id="likelihoodOverrideInfo">
               <div class="override-info-header">Likelihood Override Applied</div>
               <div class="override-info-value" id="likelihoodOverrideInfoValue"></div>
               <div class="override-info-justification" id="likelihoodOverrideInfoJustification"></div>
-            </div>
-            <div class="override-info hidden" id="severityOverrideInfo">
-              <div class="override-info-header">Severity Override Applied</div>
-              <div class="override-info-value" id="severityOverrideInfoValue"></div>
-              <div class="override-info-justification" id="severityOverrideInfoJustification"></div>
             </div>
           </div>
 
@@ -207,6 +207,21 @@
             <h3>Override</h3>
             <div class="override-group">
               <label class="override-label">
+                <input type="checkbox" id="impactOverrideToggle">
+                Override Impact
+              </label>
+              <div class="override-controls hidden" id="impactOverrideControls">
+                <select id="impactOverrideSelect">
+                  <option value="4">Critical (4)</option>
+                  <option value="3">High (3)</option>
+                  <option value="2">Medium (2)</option>
+                  <option value="1">Low (1)</option>
+                </select>
+                <textarea id="impactOverrideReason" placeholder="Justification (optional)" rows="2"></textarea>
+              </div>
+            </div>
+            <div class="override-group">
+              <label class="override-label">
                 <input type="checkbox" id="likelihoodOverrideToggle">
                 Override Likelihood
               </label>
@@ -218,21 +233,6 @@
                   <option value="1">Low (1)</option>
                 </select>
                 <textarea id="likelihoodOverrideReason" placeholder="Justification (optional)" rows="2"></textarea>
-              </div>
-            </div>
-            <div class="override-group">
-              <label class="override-label">
-                <input type="checkbox" id="severityOverrideToggle">
-                Override Severity
-              </label>
-              <div class="override-controls hidden" id="severityOverrideControls">
-                <select id="severityOverrideSelect">
-                  <option value="Critical">Critical</option>
-                  <option value="High">High</option>
-                  <option value="Medium">Medium</option>
-                  <option value="Low">Low</option>
-                </select>
-                <textarea id="severityOverrideReason" placeholder="Justification (optional)" rows="2"></textarea>
               </div>
             </div>
             <button class="btn-apply-override hidden" id="applyOverride">Apply Override</button>
