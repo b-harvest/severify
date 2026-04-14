@@ -203,10 +203,10 @@ Where Impact ∈ {1, 2, 3, 4} and Likelihood ∈ {1, 2, 3, 4}
 
 | Impact \ Likelihood | Low (1) | Medium (2) | High (3) | Critical (4) |
 |---------------------|---------|------------|----------|---------------|
-| **Critical (4)** | 2.8 High | 3.2 High | 3.6 Critical | 4.0 Critical |
-| **High (3)** | 2.2 Medium | 2.6 High | 3.0 High | 3.4 High |
-| **Medium (2)** | 1.6 Medium | 2.0 Medium | 2.4 Medium | 2.8 High |
-| **Low (1)** | 1.0 Low | 1.4 Low | 1.8 Medium | 2.2 Medium |
+| **Critical (4)** | 2.2 Medium | 2.8 High | 3.4 High | 4.0 Critical |
+| **High (3)** | 1.8 Medium | 2.4 Medium | 3.0 High | 3.6 Critical |
+| **Medium (2)** | 1.4 Low | 2.0 Medium | 2.6 High | 3.2 High |
+| **Low (1)** | 1.0 Low | 1.6 Medium | 2.2 Medium | 2.8 High |
 
 ---
 
