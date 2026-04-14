@@ -1,6 +1,8 @@
 # Severify
 
-Blockchain vulnerability severity classifier. A deterministic, wizard-based tool that calculates vulnerability severity from **Impact** and **Likelihood** scores.
+Deterministic severity classifier for blockchain vulnerabilities.
+
+**Demo: https://b-harvest.github.io/severify**
 
 ## How It Works
 
@@ -8,40 +10,30 @@ Blockchain vulnerability severity classifier. A deterministic, wizard-based tool
 SeverityScore = (0.4 x Impact) + (0.6 x Likelihood)
 ```
 
-1. **Impact** (2 steps) — Select impact category, then specific impact detail (score 1-4)
-2. **Likelihood** (3 questions) — Attacker profile, exploit feasibility, blast radius (averaged, score 1-4)
+1. **Impact** — Select impact category and specific detail (score 1-4)
+2. **Likelihood** — Answer 3 questions: attacker profile, exploit feasibility, blast radius (score 1-4)
 3. **Result** — Final severity: Critical / High / Medium / Low
 
 Both Impact and Likelihood can be manually overridden with an optional justification.
 
-## Usage
-
-Open `index.html` in a browser. No build step required.
-
-Results can be exported as Markdown, JSON, or a shareable URL that preserves all selections and overrides.
-
-## Project Structure
-
-```
-index.html          — Single-page app
-js/
-  framework.js      — Scoring data, thresholds, questions
-  engine.js         — Pure calculation logic (no DOM)
-  wizard.js         — UI controller, step navigation, overrides
-  main.js           — Entry point
-css/
-  styles.css        — Styles
-test/
-  e2e.test.js       — E2E tests (jsdom)
-```
+Assessment results can be shared via **Shareable URL** — the link encodes all selections, overrides, and justifications so anyone opening it sees the full assessment.
 
 ## Framework
 
-See [framework-2.md](framework-2.md) for the full severity classification framework, scoring methodology, severity matrix, and override mechanism.
+For the complete scoring methodology, severity matrix, impact/likelihood classification tables, and override mechanism, see **[framework-2.md](framework-2.md)**.
 
-## Tests
+---
+
+<details>
+<summary>Development</summary>
+
+```
+index.html, css/, js/ — Static single-page app (no build step)
+test/e2e.test.js      — E2E tests (jsdom)
+```
 
 ```sh
-npm install
-node test/e2e.test.js
+npm install && node test/e2e.test.js
 ```
+
+</details>
