@@ -110,6 +110,31 @@ const Wizard = {
     // Override selects - set to current values
     document.getElementById('likelihoodOverrideSelect').value = effectiveLikelihood.score;
     document.getElementById('severityOverrideSelect').value = effectiveSeverity.level.label;
+
+    // Override info display
+    const lOverrideInfo = document.getElementById('likelihoodOverrideInfo');
+    if (this.state.likelihoodOverride) {
+      lOverrideInfo.classList.remove('hidden');
+      document.getElementById('likelihoodOverrideInfoValue').textContent =
+        `${this.state.likelihoodOverride.level.label} (${this.state.likelihoodOverride.score})`;
+      const lJustEl = document.getElementById('likelihoodOverrideInfoJustification');
+      lJustEl.textContent = this.state.likelihoodOverride.justification || '';
+      lJustEl.classList.toggle('hidden', !this.state.likelihoodOverride.justification);
+    } else {
+      lOverrideInfo.classList.add('hidden');
+    }
+
+    const sOverrideInfo = document.getElementById('severityOverrideInfo');
+    if (this.state.severityOverride) {
+      sOverrideInfo.classList.remove('hidden');
+      document.getElementById('severityOverrideInfoValue').textContent =
+        this.state.severityOverride.level.label;
+      const sJustEl = document.getElementById('severityOverrideInfoJustification');
+      sJustEl.textContent = this.state.severityOverride.justification || '';
+      sJustEl.classList.toggle('hidden', !this.state.severityOverride.justification);
+    } else {
+      sOverrideInfo.classList.add('hidden');
+    }
   },
 
   renderScoreBadge(elementId, score, level) {
@@ -258,10 +283,6 @@ const Wizard = {
 
     if (lToggle) {
       const reason = document.getElementById('likelihoodOverrideReason').value.trim();
-      if (!reason) {
-        this.showToast('Likelihood override requires a justification');
-        return;
-      }
       const score = parseInt(document.getElementById('likelihoodOverrideSelect').value);
       this.state.likelihoodOverride = {
         score,
@@ -274,10 +295,6 @@ const Wizard = {
 
     if (sToggle) {
       const reason = document.getElementById('severityOverrideReason').value.trim();
-      if (!reason) {
-        this.showToast('Severity override requires a justification');
-        return;
-      }
       const levelName = document.getElementById('severityOverrideSelect').value;
       this.state.severityOverride = {
         level: SEVERITY_LEVELS[levelName.toUpperCase()],
@@ -394,6 +411,11 @@ const Wizard = {
         level: SeverifyEngine.scoreToLevel(loScore),
         justification: params.get('lor') || '',
       };
+      // Populate override UI
+      document.getElementById('likelihoodOverrideToggle').checked = true;
+      document.getElementById('likelihoodOverrideControls').classList.remove('hidden');
+      document.getElementById('likelihoodOverrideSelect').value = loScore;
+      document.getElementById('likelihoodOverrideReason').value = params.get('lor') || '';
     }
 
     if (params.has('so')) {
@@ -402,6 +424,21 @@ const Wizard = {
         level: SEVERITY_LEVELS[soLevel.toUpperCase()],
         justification: params.get('sor') || '',
       };
+      // Populate override UI
+      document.getElementById('severityOverrideToggle').checked = true;
+      document.getElementById('severityOverrideControls').classList.remove('hidden');
+      document.getElementById('severityOverrideSelect').value = soLevel;
+      document.getElementById('severityOverrideReason').value = params.get('sor') || '';
+    }
+
+    if (params.has('lo') || params.has('so')) {
+      document.getElementById('applyOverride').classList.remove('hidden');
+      // Recalculate with overrides
+      const effectiveLikelihood = this.state.likelihoodOverride || this.state.likelihoodResult;
+      this.state.severityResult = SeverifyEngine.calculateSeverity(
+        this.state.impactResult.score,
+        effectiveLikelihood.score
+      );
     }
 
     this.updateImpactBadges();

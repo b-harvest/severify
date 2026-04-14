@@ -212,8 +212,8 @@ Where Impact ∈ {1, 2, 3, 4} and Likelihood ∈ {1, 2, 3, 4}
 
 # Override Mechanism
 
-Both Likelihood and final Severity can be manually overridden with a required justification.
-When overridden, both the calculated value and the override value (with justification) are recorded.
+Both Likelihood and Severity can be manually overridden with an optional justification.
+When overridden, both the calculated value and the override value (with justification, if provided) are recorded.
 
 ---
 

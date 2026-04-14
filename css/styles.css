@@ -507,6 +507,37 @@ body {
   opacity: 0.9;
 }
 
+/* Override Info Display */
+.override-info {
+  margin-top: 12px;
+  padding: 12px 16px;
+  background: var(--accent-bg, rgba(99, 102, 241, 0.08));
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+}
+
+.override-info-header {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.override-info-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.override-info-justification {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-style: italic;
+}
+
 /* Export */
 .export-section {
   display: flex;
