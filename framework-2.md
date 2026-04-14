@@ -5,8 +5,8 @@ It resolves ambiguities identified in v1 and introduces a structured scoring sys
 
 Severity is determined using two primary factors:
 
-- **Impact** (weight: 0.6) — consequence of a successful exploit
-- **Likelihood** (weight: 0.4) — probability and difficulty of exploitation
+- **Impact** (weight: 0.4) — consequence of a successful exploit
+- **Likelihood** (weight: 0.6) — probability and difficulty of exploitation
 
 The final **Severity Score** is calculated from both factors.
 
@@ -185,7 +185,7 @@ Mapping:
 ## Severity Score Formula
 
 ```
-SeverityScore = (0.6 × Impact) + (0.4 × Likelihood)
+SeverityScore = (0.4 × Impact) + (0.6 × Likelihood)
 ```
 
 Where Impact ∈ {1, 2, 3, 4} and Likelihood ∈ {1, 2, 3, 4}

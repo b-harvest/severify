@@ -17,8 +17,8 @@ const SEVERITY_RANGES = [
   { min: 1.00, max: 1.49, level: SEVERITY_LEVELS.LOW },
 ];
 
-const IMPACT_WEIGHT = 0.6;
-const LIKELIHOOD_WEIGHT = 0.4;
+const IMPACT_WEIGHT = 0.4;
+const LIKELIHOOD_WEIGHT = 0.6;
 
 // Impact Step 1: Category selection
 const IMPACT_CATEGORIES = [
